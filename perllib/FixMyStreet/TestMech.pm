@@ -559,6 +559,21 @@ sub delete_problems_for_body {
     }
 }
 
+sub create_contact_ok {
+    my $self = shift;
+    my %contact_params = (
+        confirmed => 1,
+        deleted => 0,
+        editor => 'Test',
+        whenedited => \'current_timestamp',
+        note => 'Created for test',
+        @_
+    );
+    my $contact = FixMyStreet::App->model('DB::Contact')->find_or_create( \%contact_params );
+    ok $contact, 'found/created contact ' . $contact->category;;
+    return $contact;
+}
+
 sub create_body_ok {
     my $self = shift;
     my ( $area_id, $name, %extra ) = @_;
